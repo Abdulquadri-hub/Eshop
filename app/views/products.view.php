@@ -1,20 +1,64 @@
 <?php $this->View("includes/header",$data) ?>
  <?php $this->View("includes/nav",$data) ?>
+
+ <style>
+
+    .eshop-section-title {
+        padding: 5px 10px;
+        background-color: #fff;
+        margin: auto;
+        width: 200px;
+        opacity: 0.8;
+        margin-top: 35px;
+    }
+
+    .eshop-section-title h1{
+        font-size: 28px;
+        font-weight: 700;
+        color: #201f1fd9;
+    }
+
+    
+    .eshop-category-title {
+        color: #201f1fd9;
+        font-family: sans-serif;
+        font-weight: 500;
+        font-size: 24px;
+    }
+    .eshop-category-list,
+    .eshop-brand-list {
+        width: 200px;
+    }
+
+    .eshop-category-list,
+    .eshop-brand-list, .nav-item {
+        font-family: sans-serif;
+        font-size: 18px;
+        color: #201f1fd9;
+        font-weight: 10;
+    }
+
+    .card {
+        vertical-align: top;
+    }
+
+
+ </style>
  
 	<div class="container position-relative text-center">
-		<header class="position-relative text -center text-white mb-5">
-			<img src="<?=get_image($image->crop("assets/images/mbanner.jpg", 1920, 1280))?>" alt="Banner" class="w-100">
-			<div class="position-absolute top-50 start-50 translate-middle-x w-100 px-3">
-				<h1 class="display-4">
+		<header class="position-relative text-center text-white mb-5">
+			<div class="eshop-section-title d-flex align-items-center justify-content-center">
+				<h1>
 					New Arrivals
 				</h1>
 			</div>
 		</header>
 
         <div class="row">
-            <div class="col col-lg-4 text-start">
-                <h3>Category</h3>
-                <ul class="nav flex-column">
+            <div class="col-lg-2 text-start">
+                <h3 class="eshop-category-title">Category</h3>
+                <ul class="nav flex-column eshop-category-list">
+
                 <?php if(isset($categorys) && $categorys):?>
                 <?php foreach($categorys as $row):?>
                     <li class="nav-item">
@@ -24,9 +68,10 @@
                     </li>
                 <?php endforeach; ?>
                 <?php endif; ?>
+
                 </ul>
                 <h3>Brand</h3>
-                <ul class="nav flex-column">
+                <ul class="nav flex-column eshop-brand-list">
                 <?php if(isset($brands) && $brands):?>
                 <?php foreach($brands as $row):?>
                     <li class="nav-item">
@@ -39,7 +84,7 @@
                 </ul>
             </div>
 
-            <div class="col col-lg-8 d-flex justify-content-between align-items-center flex-column flex-lg-row">
+            <div class="col-md-10 col-lg-10 d-flex align-items-center flex-column flex-lg-row">
                 <?php if(isset($products) && $products):?>
 			    <?php foreach($products as $key => $row):?>
                     <div class="card m-2">

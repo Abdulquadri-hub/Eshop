@@ -63,6 +63,7 @@ class Cart
 
 		if(!$this->checkCart($row->product_id))
 		{
+			
 			$ses = new \Core\Session;
 			$ip = getIPAddress();
 				
@@ -73,6 +74,7 @@ class Cart
 			
 				$item['cart_id'] = randomString(10);
 				$item['product_id'] = $row->product_id;
+				$item['quantity'] = $row->quantity;
 				$item['ip_address'] = $ip;
 				$item['date_created'] = date("Y-m-d H:i:s");
 				$item['date_updated'] = date("Y-m-d H:i:s");
@@ -81,20 +83,10 @@ class Cart
 				if((is_array($data)) && (count($data)  > 0) && $data)
 				{
 					$this->insert($data);
+					return true;
 					message("Bag Added!");
 				}
-
-				
-			
-				// if(($ses->is_logged_in()) && (!empty($ses->user('username'))))
-				// {
-				// 	$data = $_SESSION['cart_items'];
-				// 	$data['user_id'] = $ses->user('user_id');
-				// 	$this->insert($data);
-				// }
-		}else{
-			redirect('home');
-		}
+		    }
 	}
 
 	public function deleteCart()
@@ -241,7 +233,7 @@ class Cart
 
 		if(is_array($data) && count($data) > 0)
 		{
-			return $data;
+			return $data;true;
 		}
 
 		return false;

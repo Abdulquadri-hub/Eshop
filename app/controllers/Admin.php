@@ -295,6 +295,12 @@ class Admin
 			case 'delete':
 
 				$data['title'] = "Delete Order";
+
+				if($data['req']->posted())
+				{
+					$data['category']->deleteOrder($id);
+					redirect('admin/orders');
+				}
 				
 				$this->view('admin/orders/delete',$data);
 				break;
@@ -304,7 +310,13 @@ class Admin
 
 				$data['title'] = "Orders";
 
-				$this->view('admin/orders/product',$data);
+				$query = "select * from orders 
+				join users on orders.user_id = users.user_id 
+				where status = :status";
+
+				$data['completedOrders'] = $order->query($query,['status'=>'success']);
+
+				$this->view('admin/orders/home',$data);
 				break;
 		}
 	}

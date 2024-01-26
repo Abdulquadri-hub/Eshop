@@ -25,13 +25,12 @@
                         </li>
                         <li class="nav-item d-flex align-items-center">
                             <a href="<?=ROOT?>/carts" class="nav-link mx-2">
-                                <i class="fas fa-shopping-bag"></i>
+                                <i class="fas fa-shopping-bag "></i>
                                 Bag 
                             </a>
-							<span class="badge rounded-pill bg-secondary">
+							<span class="badge rounded-pill bg-secondary js-bag-count">
 								<?php  
-								    $cart = new \Model\Cart;
-									echo $cart->showCartItemsInBag();
+								   echo (new \Model\Cart())->showCartItemsInBag() ?? 0;
 								?>
 							</span>
                         </li>

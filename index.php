@@ -21,3 +21,9 @@ $app->loadController();
 
 
 
+// show($_SESSION);
+// unset($_SESSION['cart_items']);
+// die;
+
+
+

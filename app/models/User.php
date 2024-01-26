@@ -124,8 +124,20 @@ class User
 
 					case 'customer':
 						$cartItems = $cart->displayCartItems();
+
 						if($cartItems){
+
+							if(($ses->is_logged_in()) && (!empty($ses->user('username'))))
+							{
+								$cart = new \Model\Cart();
+								$cart->query("update carts set user_id = ? where user_id = :user_id limit 1", [
+									'user_id'=>$ses->user('user_id'),
+									'product_id'=>$data['product_id']
+								]);
+							}
+							
 							redirect('carts/cart');
+
 						}else{
 							redirect('customer');
 						}

@@ -112,6 +112,5 @@
 			return;
 		}
 		document.querySelector(".js-preview-image").src = URL.createObjectURL(file);
-
 	}
 </script>

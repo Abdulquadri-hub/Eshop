@@ -1,126 +1,344 @@
 <?php $this->View("includes/header",$data) ?>
 <?php $this->View("includes/nav",$data) ?>
 
-<div class="row w-100 h-100">
+<style>
+  .title{
+    margin-bottom: 5vh;
+  }
+  .card{
+    margin: auto;
+    max-width: 950px;
+    width: 90%;
+    box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 1rem;
+    border: transparent;
+    margin-top: 10px;
+  }
+  @media(max-width:767px){
+    .card{
+        margin: 3vh auto;
+    }
+  }
+  .cart{
+    background-color: #fff;
+    padding: 4vh 5vh;
+    border-bottom-left-radius: 1rem;
+    border-top-left-radius: 1rem;
+  }
+  @media(max-width:767px){
+    .cart{
+        padding: 4vh;
+        border-bottom-left-radius: unset;
+        border-top-right-radius: 1rem;
+    }
+  }
+  .summary{
+    background-color: #ddd;
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    padding: 4vh;
+    color: rgb(65, 65, 65);
+  }
+  @media(max-width:767px){
+    .summary{
+    border-top-right-radius: unset;
+    border-bottom-left-radius: 1rem;
+    }
+  }
+  .summary .col-2{
+    padding: 0;
+  }
+  .summary .col-10
+  {
+    padding: 0;
+  }.row{
+      margin: 0;
+  }
+  .title b{
+      font-size: 1.5rem;
+  }
+  .main{
+      margin: 0;
+      padding: 2vh 0;
+      width: 100%;
+  }
+  .col-2, .col{
+      padding: 0 1vh;
+  }
+  .href{
+      padding: 0 1vh;
+  }
+  .close{
+      margin-left: auto;
+      font-size: 0.7rem;
+  }
+  img{
+      width: 3.5rem;
+  }
+  .back-to-shop{
+      margin-top: 4.5rem;
+  }
+  h5{
+      margin-top: 4vh;
+  }
+  hr{
+      margin-top: 1.25rem;
+  }
+  .form{
+      padding: 2vh 0;
+  }
+  .select{
+      border: 1px solid rgba(0, 0, 0, 0.137);
+      padding: 1.5vh 1vh;
+      margin-bottom: 4vh;
+      outline: none;
+      width: 100%;
+      background-color: rgb(247, 247, 247);
+  }
+  .code-input{
+      border: 1px solid rgba(0, 0, 0, 0.137);
+      padding: 1vh;
+      margin-bottom: 4vh;
+      outline: none;
+      width: 100%;
+      background-color: rgb(247, 247, 247);
+  }
+  .code-input:focus::-webkit-input-placeholder
+  {
+        color:transparent;
+  }
+  .checkout-btn{
+      background-color: #000;
+      border-color: #000;
+      color: white;
+      width: 100%;
+      font-size: 0.7rem;
+      margin-top: 4vh;
+      padding: 1vh;
+      border-radius: 0;
+  }
+  .checkout-btn:focus{
+      box-shadow: none;
+      outline: none;
+      box-shadow: none;
+      color: white;
+      -webkit-box-shadow: none;
+      /* -webkit-user-select: none; */
+      transition: none; 
+  }
+  .checkout-btn:hover{
+      color: white;
+  }
+  .href{
+      color: black; 
+  }
+  .href:hover{
+      color: black;
+      text-decoration: none;
+  }
+   #code{
+      background-image: linear-gradient(to left, rgba(255, 255,   255, 0.253) , rgba(255, 255, 255, 0.185)), url("https://  img.icons8.com/small/16/000000/long-arrow-right.png");
+      background-repeat: no-repeat;
+      background-position-x: 95%;
+      background-position-y: center;
+  }
+</style>
 
-    <div class="col-12 col-md-6">
-        <div class="card-body">
-        <h5 class="dislplay-6 card-title">Order Summary</h5>
-            <?php if(isset($carts) && $carts): ?>
-            <?php foreach($carts as $cart): ?>
-            <div class="d-flex m-3 bg-white">
-                <img src="<?=get_image($cart->image)?>" width="70" class="img-thumbnail"  alt="">
-                
-                <div class="row m-2">
-                    <h6 class="text-muted"><?=esc($cart->product)?></h6>
-                    <h6 class="text-muted"><?=esc($cart->price)?> Naira</h6>
-                    <div class="col-sm-10">
-                        <form action="" method="post">
-                            <div class="input-group mb-3" style="width: 200px;">
-                              <input type="text"   name="cart_id" hidden value="<?=$cart->cart_id?>"  class="form-control">
-                              <input type="text" name="quantity" class="form-control" value="" placeholder="Quantity">
-                              <button class="input-group-text btn btn-outline-dark" name="update" type="submit">
-                                <i class="fa fa-pencil"></i>
-                              </button>
-                            </div>
-                        </form>
-                    </div>
-                </div> 
-                <form action="" method="post">
-                <div class="col-sm-2 mt-3 me-5">
-                    <input type="text" name="cart_id" hidden value="<?=$cart->cart_id?>"  class="form-control">
-                    <button class="btn btn-outline-danger" name="delete" type="submit"><i class="fa fa-trash"></i></button>
-                </div>
-                </form>
+<div class="card">
+    <div class="row">
+      <div class="col-md-8 cart">
+      <div class="title">
+          <div class="row">
+                <div class="col"><h4><b>Shopping Cart</b></h4></div>
+                <div class="col align-self-center text-right text-muted js-item-count">items</div>
+              </div>
+           </div>
+        <!-- cart items -->
+        <div class="js-cartitems">
 
-            </div>
-            <?php endforeach; ?>
-            <?php else: ?>
-                <div class="d-flex align-items-center">
-                    <div class="ps-3">
-                      <span class="text-muted  pt-2 ps-1">You Have <span class="text-danger">No</span> Item In Your Cart <span></span>
-                    </div>
-                  </div>
-            <?php endif; ?>
         </div>
+        <!-- items ends -->
 
-        <div class="row my-3">
-            <div class="col-4">
-                <h6 class="text-muted"><strong class="card-title">SubTotal Price: <?= $subtotalprice ?? $totalprice ?>N</strong></h6>
-            </div>
-            <div class="col-4">
-                <h6 class="text-muted"><strong class="card-title">Cart Items (<?=(new \Model\Cart)->showCartItemsInBag();?>)</strong> </h6>
-            </div>
-            <div class="col-4">
-            <span><a href="<?=ROOT?>/products">Continue Shopping</a></span>    
-            </div>
+           <div class="back-to-shop"><a class="href" href="#">&leftarrow;</a><span class="text-muted">Back to shop</span>
+          </div>
+      </div>
 
-            <div class="col-6 text-center mt-2">
-              <p class="text-dark">Please,before placing order finalize your orders, Thank You.</a>   
-            </div>
-
-            <div class="col-6 text-center mt-3">
-              <a href="<?=ROOT?>/carts/place-order">
-                <button class="btn btn-sm btn-outline-dark">
-                  Place Order
-                </button>    
-              </a>
-            </div>
-        </div>
-        
-    </div>
-
-    <?php  if($mode == "place-order"):?>
-    <div class="col-12 col-md-6 border-e">
-        <div class="">
-            <div class="card-body">
-              <h5 class="card-title">Make Your Payment</h5>
-
-              <!-- Floating Labels Form -->
-              <form method="POST" class="row g-3" action="" id="paymentForm">
-
-                <div class="col-md-12">
-                  <div class="form-floating">
-                    <input type="text" name="fullname" class="form-control" id="full-name" value="<?=ucfirst($ses->user('name'))?>" placeholder="Your Full Name">
-                    <label for="floatingName">Your Full-Name</label>
-                  </div>
-                </div>
-
-                <div class="col-md-6">
-                  <div class="form-floating">
-                    <input type="email" id="email-address" name="email" value="<?=ucfirst($ses->user('email'))?>" class="form-control"  placeholder="Your Email">
-                    <label for="floatingEmail">Your Email</label>
-                  </div>
-                </div>
-
-                <div class="col-md-6">
-                  <div class="form-floating">
-                    <input type="tel" id="amount"class="form-control" name="amount" readonly value="<?= $subtotalprice ?? $totalprice?>" placeholder="Amount">
-                    <label for="floatingPassword">Amount</label>
-                  </div>
-                </div>
-
-                <div class="text-center">
-                  <button type="submit" onclick="payWithPaystack()" name="createorder" class="btn  btn-outline-dark">
-                    Pay
-                  </button>
-                </div>
-
-              </form><!-- End floating Labels Form -->
-              <script src="https://js.paystack.co/v1/inline.js"></script>
-            </div>
-        </div>
-    </div>
-    <?php endif; ?>
-
+      <div class="col-md-4 summary js-item-summary">
+        <!-- items summary -->
+      </div>
+    </div>         
 </div>
 
 
 <script>
+fetch_data({
+  'data_type': "read",
+  'text': ""
+}); 
+
+var PRODUCTS = [];
+var ITEMS = [];
+
+function fetch_data(data) 
+{
+  var ajax = new XMLHttpRequest();
+
+  ajax.addEventListener('readystatechange', function(e) {
+
+    if(ajax.readyState == 4) 
+    {
+      if(ajax.status == 200)
+      {
+
+        handle_result(ajax.responseText);
+
+      } else {
+
+        console.log("An Error Occured. " + ajax.status + " Error Message: "+ ajax.statusText);
+      }
+    }
+  })
+  ajax.open("POST", "<?=ROOT?>/carts/carts_ajax", true);
+  ajax.send(JSON.stringify(data));
+}
+
+function handle_result(result) 
+{
+  console.log(result);
+  var obj = JSON.parse(result);
+
+  if(typeof obj != "undefined") 
+  {
+    if(obj.data_type == "read")
+    {
+      referesh_cart_items(obj);
+    }
+  }
+}
+
+
+function referesh_cart_items(obj)
+{
+  var item_count = document.querySelector(".js-item-count");
+  var item_summary_count = document.querySelector(".js-summary-count");
+
+  var cartDiv = document.querySelector(".js-cartitems");
+  cartDiv.innerHTML = "";
+
+  var item_summary = document.querySelector(".js-item-summary");
+  item_summary.innerHTML = "";
+
+  ITEMS = [];
+
+  if(typeof obj.data == "object")
+  {
+    
+    ITEMS = obj.data;
+    item_count.innerHTML = ITEMS.length + " items";
+    // item_summary_count.innerHTML = 'ITEMS ' + ITEMS.length;
+
+    for (var i = obj.data.length - 1; i >= 0; i--)
+    {
+      cartDiv.innerHTML += item_html(obj.data[i],i);
+      item_summary.innerHTML += item_summary_html(obj.data[i],i);
+    } 
+  }
+}
+
+function change_qty(direction,e)
+{
+  var index = e.currentTarget.getAttribute("index");
+  var item_qty = document.querySelector("#js-quantity");
+
+  if(direction == "up")
+  {
+    
+    ITEMS[index].quantity += 1;
+    item_qty.innerHTML = ITEMS[index].quantity;
+
+  }else
+  if(direction == "down")
+  {
+    ITEMS[index].quantity -= 1
+    item_qty.innerHTML = ITEMS[index].quantity;
+
+  }
+
+  if(ITEMS[index].quantity < 1)
+  {
+    ITEMS[index].quantity = 1;
+  }
+
+  if(item_qty.innerHTML == 0)
+  {
+    item_qty.innerHTML = 1;
+  }
+
+  // var item_summary
+  // var grand = dou
+}
+
+
+
+
+function item_html(row,index) 
+{
+  return `   
+
+           <div class="row">
+              <div class="row main align-items-center">
+                  <div class="col-2"><img class="img-fluid" src="${row.image}"></div>
+
+                  <div class="col">
+                    <div class="row text-muted">
+                      ${row.product}
+                    </div>
+                      
+                  </div>
+
+                  <div class="col">
+                    <span index=${index} onclick="change_qty('down',event)" class="href btn btn-sm btn-dark text-white fw-5">-</span>
+
+                      <span class="href btn btn-sm btn-white text-dark fw-5" id="js-quantity">
+                        ${row.quantity} 
+                      </span>
+
+                    <span index=${index} onclick="change_qty('up',event)" class="href btn btn-sm btn-dark text-white fw-5">+</span>
+                  </div>
+
+                  <div class="col">NG ${row.price}<span class="close btn btn-sm btn-danger js-cancel-item">&#10005;</span></div>
+              </div>
+           </div>
+  `;
+}
+
+function item_summary_html(row,index) 
+{
+  return `   
+  <div>
+    <h5><b>Summary</b></h5>
+  </div>
+   <hr>
+  <div class="row">
+      <div class="col js-summary-count" style="padding-left:0;"></div>
+      <div class="col text-right">NG ${row.price}</div>
+  </div>
+
+  <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
+    <div class="col">TOTAL PRICE</div>
+    <div class="col text-right">&euro; 137.00</div>
+  </div>
+  <button class="btn checkout-btn">CHECKOUT</button>
+  `;
+}
+  
+</script>
+
+<!-- <script>
   const paymentForm = document.getElementById('paymentForm');
   paymentForm.addEventListener("submit", payWithPaystack, false);
 
-function payWithPaystack(e) {
+  function payWithPaystack(e) {
   e.preventDefault();
 
   let handler = PaystackPop.setup({
@@ -143,5 +361,6 @@ function payWithPaystack(e) {
   });
 
   handler.openIframe();
-}
-</script>
+  }
+</script> -->
+
